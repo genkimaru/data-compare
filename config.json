@@ -1,0 +1,81 @@
+{
+    "kpi_report": {
+    "iiq" :{
+        "file_source": "./0430-0510.csv",
+        "exclude_columns": [],
+        "explode_columns" : {"Manual Work Item#":"##"},
+        "assign_type":{"Requested date": "datetime"}
+    },
+    "bq" : {
+        "file_source": "./bigquery2022-5-1_10.csv",
+        "rename_mapping" :{},
+        "exclude_columns": [],
+        "explode_columns" : {"Manual Work Item#":"##"},
+        "assign_type":{"Requested date": "datetime"}
+    },
+    "compare" : {
+        "join_columns" : ["Access Request ID","manual work item#"],
+        "max_show_rows" : 100,
+        "html_generation_dir" : "C:/Users/guan.c.wang/Desktop/datacompare/kpi_report",
+        "download_unique_iiq" : "False",
+        "download_unique_bq" : "False",
+        "download_intersect_rows" : "False"
+    }
+
+    },
+    "denied_roles": {
+    "iiq" :{
+        "file_source": "C:/Users/guan.c.wang/Desktop/denied_roles",
+        "exclude_columns": ["RequestDate","RequestedReason","Level1 Approver EID","Date of Level1 Declined",
+            "Level1 Declined Comments","Level2 Approver EID","Date of Level2 Declined","Level2 Declined Comments"],
+        "explode_columns" : {"Connector App Name": ","},
+        "assign_type":{ "Business App AirID" : "str" }
+    },
+    "bq" : {
+        "file_source": "C:/Users/guan.c.wang/Desktop/AIA-IGA/tmp/denied roles/new_bq",
+        "rename_mapping" : {"proxy_eid" : "Proxied By EnterpriseID"   ,
+            "requester_eid" : "Requestor EnterpriseID",
+            "proxy_sapusernm" : "Proxied By SAPID",
+            "requester_sapusernm"        : "Requestor SAPID",
+            "proxy_peoplekey"            :   "Proxied By Peoplekey",
+            "requester_peoplekey"        :   "Requestor Peoplekey",
+            "proxy_personnelnbr"         :   "Proxied By PersonnelNbr",
+            "requester_personnelnbr"     :   "Requestor PersonnelNbr",
+            "requester_user_status"      :   "PersonnelStatus",
+            "requester_user_type"        :   "UserType",
+            "role_name"                  :   "Role Name",
+            "display_name"               :   "Role Display Name",
+            "role_type"                  :   "Role Type",
+            "dimensionkey"               :   "Dimension Key",
+            "connector_application_name" :   "Connector App Name",
+            "business_application_name"  :   "Business App Name",
+            "business_application_airid" :   "Business App AirID",
+            "access_request_id"          :   "Access Request ID",
+            "mar_id"                     :   "MAR ID",
+            "created"                    :   "RequestDate",
+            "requestedReason"            :   "RequestedReason",
+            "level1approvereid"          :   "Level1 Approver EID",
+            "level1denieddate"           :   "Date of Level1 Declined",
+            "level1deniedcomments"       :   "Level1 Declined Comments",
+            "level2approvereid"          :   "Level2 Approver EID",
+            "level2denieddate"           :   "Date of Level2 Declined",
+            "level2deniedcomments"       :   "Level2 Declined Comments",
+            "end_date"                   :   "Request Completion Date",
+            "is_proxy"                   :   "Proxy Request" } ,
+        "exclude_columns": ["RequestDate","RequestedReason","Level1 Approver EID","Date of Level1 Declined",
+                            "Level1 Declined Comments","Level2 Approver EID","Date of Level2 Declined","Level2 Declined Comments" , "Request Completion Date"],
+        "explode_columns" : {"Connector App Name": ","},
+        "assign_type":{ "Business App AirID" : "str" }
+        
+    },
+    "compare" : {
+        "join_columns" : ["Access Request ID" , "Connector App Name", "Dimension Key"],
+        "max_show_rows" : 20,
+        "html_generation_dir" : "./denied_roles",
+        "download_unique_iiq" : "True",
+        "download_unique_bq" : "True",
+        "download_intersect_rows" : "True"
+
+    }
+}
+}
